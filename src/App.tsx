@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  Mail, 
-  Menu, 
-  X, 
-  Code, 
-  Briefcase, 
-  User, 
-  FileText, 
-  ExternalLink,
-  MessageSquare
+Github, 
+Linkedin, 
+Twitter, 
+Mail, 
+Menu, 
+X, 
+Code, 
+Briefcase, 
+User, 
+FileText, 
+ExternalLink,
+MessageSquare,
+RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './components/ThemeToggle';
+import ParticleBackground from './components/ParticleBackground';
 import Scene3D from './components/Scene3D';
 import HeroModel from './components/HeroModel';
+import IcosahedronModel from './components/IcosahedronModel';
 import SkillsModel from './components/SkillsModel';
 import ProjectsModel from './components/ProjectsModel';
 import ContactModel from './components/ContactModel';
 
 function App() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+const [activeSection, setActiveSection] = useState('home');
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [darkMode, setDarkMode] = useState(false);
+const [modelToggle, setModelToggle] = useState(false);
 
   // Initialize dark mode based on user preference
   useEffect(() => {
@@ -65,8 +69,9 @@ function App() {
     }
   };
 
-  return (
-    <div className={`min-h-screen bg-gray-50 dark:bg-dark-100 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300`}>
+return (
+<div className={`min-h-screen bg-gray-50 dark:bg-dark-100 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300`}>
+    <ParticleBackground />
       {/* Header */}
       <header className="fixed w-full bg-white dark:bg-dark-200 shadow-sm z-50 transition-colors duration-300">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -210,13 +215,26 @@ function App() {
                   <div className="absolute -bottom-4 -right-4 bg-white dark:bg-dark-200 p-4 rounded-full shadow-lg">
                     <Code className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
                   </div>
-                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
-                    <div className="w-full h-full absolute opacity-70">
-                      <Scene3D>
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
+                <div className="w-full h-full absolute opacity-70">
+                    <Scene3D>
+                    {modelToggle ? (
+                        <IcosahedronModel darkMode={darkMode} />
+                    ) : (
                         <HeroModel darkMode={darkMode} />
-                      </Scene3D>
-                    </div>
-                  </div>
+                    )}
+                    </Scene3D>
+                </div>
+                </div>
+                <motion.button
+                onClick={() => setModelToggle(!modelToggle)}
+                className="absolute -bottom-12 -left-4 bg-white dark:bg-dark-200 p-3 rounded-full shadow-lg z-10 pointer-events-auto"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                title="Toggle 3D Model"
+                >
+                <RefreshCw className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                </motion.button>
                 </div>
               </motion.div>
             </div>
@@ -657,8 +675,7 @@ function App() {
                 viewport={{ once: true }}
               >
                 <div className="bg-gray-50 dark:bg-dark-300 p-6 rounded-lg shadow-md transition-colors duration-300">
-                  <h3 className=" <div className="bg-gray-50 dark:bg-dark-300 p-6 rounded-lg shadow-md transition-colors duration-300">
-                  <h3 className="text-xl font-bold mb-4">Send Me a Message</h3>
+                <h3 className="text-xl font-bold mb-4">Send Me a Message</h3>
                   <form>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       <div>
